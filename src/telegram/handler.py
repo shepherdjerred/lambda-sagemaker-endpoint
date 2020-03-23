@@ -2,6 +2,7 @@ import logging
 import telegram
 import os
 import requests
+import json
 
 """
 A simple Lambda function which acts as a Telegram webhook handler. It takes
@@ -17,18 +18,24 @@ TELEGRAM_API_KEY = os.getenv('TELEGRAM_API_KEY')
 def handler(event, context):
     print(event)
 
-    body = event['body']
+    body = json.loads(event['body'])
     if 'message' not in body:
-        return
+        'No message'
 
     message = body['message']
     if 'text' not in message:
-        return
+        'No text'
 
     text = message['text']
     chat_id = message['chat']['id']
+
     response = get_response(text)
     send_message(response, chat_id)
+
+    return {
+        'message': message,
+        'response': response
+    }
 
 
 def get_response(prompt):

@@ -9,11 +9,11 @@ sagemaker_client = boto3.client('runtime.sagemaker')
 def handler(event, context):
     print(event)
 
-    payload = event['body']
+    body = json.dumps(json.loads(event['body']))
 
     response = sagemaker_client.invoke_endpoint(EndpointName=ENDPOINT_NAME,
                                                 ContentType='application/json',
-                                                Body=payload)
+                                                Body=body)
     print(response)
 
     result = json.loads(response['Body'].read().decode())
