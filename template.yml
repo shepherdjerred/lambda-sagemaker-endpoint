@@ -1,0 +1,14 @@
+Transform: AWS::Serverless-2016-10-31
+Resources:
+  SageMakerLambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/sagemaker/
+      Handler: handler.handler
+      Runtime: python3.8
+  TelegramWebhookLambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/telegram/
+      Handler: handler.handler
+      Runtime: python3.8
